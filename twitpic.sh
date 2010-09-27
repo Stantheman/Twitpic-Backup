@@ -149,5 +149,8 @@ for ID in $ALL_IDS; do
 #  DATE_FORMATTED="$YEAR-$MONTH-$DAY-$HOURS_OFF:00"
 #  echo "DATE_FORMATTED: $DATE_FORMATTED" | tee -a $LOG_FILE
 #############COMMENT3
+
+rm -v ./*.html
+
 done
 
