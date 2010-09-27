@@ -9,7 +9,6 @@
 # http://tuxbox.blogspot.com/2010/03/twitpic-to-posterous-export-script.html
 
 RUN_DATE=`date +%F--%H-%m-%S`
-SCRIPT_VERSION_STRING="v1.0"
 
 TP_NAME=$1
 WORKING_DIR=$2
@@ -29,10 +28,6 @@ fi
 
 cd $WORKING_DIR
 
-if [ -f "$HTML_OUT" ]; then
-  rm -v $HTML_OUT
-fi
-
 if [ ! -d "images" ]; then
   mkdir images;
 fi
@@ -43,11 +38,12 @@ fi
 
 MORE=1
 PAGE=1
+
 while [ $MORE -ne 0 ]; do
   echo PAGE: $PAGE
   FILENAME="html/$PREFIX-page-$PAGE.html"
   if [ ! -f "$FILENAME" ]; then
-echo "working"
+    echo "working"
     wget http://twitpic.com/photos/${TP_NAME}?page=$PAGE -O $FILENAME
   fi
   if [ -z "`grep "More photos &gt;" $FILENAME`" ]; then
