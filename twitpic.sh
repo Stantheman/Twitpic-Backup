@@ -32,6 +32,12 @@ cd $WORKING_DIR
 if [ -f "$HTML_OUT" ]; then
   rm -v $HTML_OUT
 fi
+
+IMAGES=
+if [ ! -d "images" ]; then
+  mkdir images;
+fi
+
 MORE=1
 PAGE=1
 while [ $MORE -ne 0 ]; do
@@ -99,8 +105,8 @@ for ID in $ALL_IDS; do
       EXT=`echo "$FULL_URL" | grep -Eo "\.[a-zA-Z0-9]+$"`
     fi
     FULL_FILE=$PREFIX-$ID-full$EXT
-    if [ ! -f $FULL_FILE ]; then
-      wget "$FULL_URL" -O $FULL_FILE
+    if [ ! -f "images/$FULL_FILE" ]; then
+      wget "$FULL_URL" -O "images/$FULL_FILE"
     fi
 #######TEST########
 #    SCALED_FILE=$PREFIX-$ID-scaled$EXT
@@ -149,8 +155,6 @@ for ID in $ALL_IDS; do
 #  DATE_FORMATTED="$YEAR-$MONTH-$DAY-$HOURS_OFF:00"
 #  echo "DATE_FORMATTED: $DATE_FORMATTED" | tee -a $LOG_FILE
 #############COMMENT3
-
-rm -v ./*.html
 
 done
 
