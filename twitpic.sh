@@ -17,10 +17,12 @@ IMG_DOWNLOAD=1
 PREFIX=twitpic-$TP_NAME
 HTML_OUT=$PREFIX-all-$RUN_DATE.html
 
+# Checks the user-supplied arguments
 if [ -z "$TP_NAME" ]; then
   echo "You must supply a TP_NAME."
   exit
 fi
+
 if [ ! -d "$WORKING_DIR" ]; then
   echo "You must supply a WORKING_DIR."
   exit
@@ -28,12 +30,17 @@ fi
 
 cd $WORKING_DIR
 
+# Checks for the directories it needs
 if [ ! -d "images" ]; then
   mkdir images;
 fi
 
 if [ ! -d "html" ]; then
   mkdir html;
+fi
+
+if [ ! -d "logs" ]; then
+  mkdir logs;
 fi
 
 MORE=1
@@ -43,20 +50,19 @@ while [ $MORE -ne 0 ]; do
   echo PAGE: $PAGE
   FILENAME="html/$PREFIX-page-$PAGE.html"
   if [ ! -f "$FILENAME" ]; then
-    echo "working"
-    wget http://twitpic.com/photos/${TP_NAME}?page=$PAGE -O $FILENAME
+	wget http://twitpic.com/photos/${TP_NAME}?page=$PAGE -O $FILENAME
   fi
   if [ -z "`grep "More photos &gt;" $FILENAME`" ]; then
-    MORE=0
+	MORE=0
   else
-    PAGE=`expr $PAGE + 1`
+	PAGE=`expr $PAGE + 1`
   fi
 done
 
 ALL_IDS=`cat html/$PREFIX-page-* | grep -Eo "<a href=\"/[a-zA-Z0-9]+\">" | grep -Eo "/[a-zA-Z0-9]+" | grep -Eo "[a-zA-Z0-9]+" | sort -r | xargs`
 
 COUNT=0
-LOG_FILE=$PREFIX-log-$RUN_DATE.txt
+LOG_FILE=logs/$PREFIX-log-$RUN_DATE.txt
 
 echo $ALL_IDS | tee -a $LOG_FILE
 
@@ -67,19 +73,19 @@ for ID in $ALL_IDS; do
   echo "Processing $ID..."
   FULL_HTML="html/$PREFIX-$ID-full.html"
   if [ ! -f "$FULL_HTML" ]; then
-    wget http://twitpic.com/$ID/full -O $FULL_HTML
+	wget http://twitpic.com/$ID/full -O $FULL_HTML
   fi
 
- FULL_URL=`grep "<img src" $FULL_HTML | grep -Eo "src=\"[^\"]*\"" | grep -Eo "http://[^\"]*"`
+  FULL_URL=`grep "<img src" $FULL_HTML | grep -Eo "src=\"[^\"]*\"" | grep -Eo "http://[^\"]*"`
 
   if [ "$IMG_DOWNLOAD" -eq 1 ]; then
-    EXT=`echo "$FULL_URL" | grep -Eo "[a-zA-Z0-9]+\.[a-zA-Z0-9]+\?" | head -n1 | grep -Eo "\.[a-zA-Z0-9]+"`
-    if [ -z "$EXT" ]; then
-      EXT=`echo "$FULL_URL" | grep -Eo "\.[a-zA-Z0-9]+$"`
-    fi
-    FULL_FILE=$PREFIX-$ID-full$EXT
-    if [ ! -f "images/$FULL_FILE" ]; then
-      wget "$FULL_URL" -O "images/$FULL_FILE"
-    fi
+	EXT=`echo "$FULL_URL" | grep -Eo "[a-zA-Z0-9]+\.[a-zA-Z0-9]+\?" | head -n1 | grep -Eo "\.[a-zA-Z0-9]+"`
+	if [ -z "$EXT" ]; then
+	  EXT=`echo "$FULL_URL" | grep -Eo "\.[a-zA-Z0-9]+$"`
+	fi
+	FULL_FILE=$PREFIX-$ID-full$EXT
+	if [ ! -f "images/$FULL_FILE" ]; then
+	  wget "$FULL_URL" -O "images/$FULL_FILE"
+	fi
   fi
 done
