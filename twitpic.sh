@@ -33,7 +33,6 @@ if [ -f "$HTML_OUT" ]; then
   rm -v $HTML_OUT
 fi
 
-IMAGES=
 if [ ! -d "images" ]; then
   mkdir images;
 fi
