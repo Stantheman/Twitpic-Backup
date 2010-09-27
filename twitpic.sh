@@ -1,16 +1,15 @@
 #!/bin/sh
 
-# Copyright 2010 Tim "burndive" of http://burndive.blogspot.com/
+# Modified by Stan Schwertly on 9-11-10 to download locally rather than to send to Posterous
+
 # This software is licensed under the Creative Commons GNU GPL version 2.0 or later.
 # License informattion: http://creativecommons.org/licenses/GPL/2.0/
 
-# This script was obtained from here:
+# This script is a derivative of the original, obtained from here:
 # http://tuxbox.blogspot.com/2010/03/twitpic-to-posterous-export-script.html
 
-# Modified by Stan Schwertly on 9-11-10 to download locally
-
 RUN_DATE=`date +%F--%H-%m-%S`
-SCRIPT_VERSION_STRING="v1.2.5"
+SCRIPT_VERSION_STRING="v1.0"
 
 TP_NAME=$1
 WORKING_DIR=$2
