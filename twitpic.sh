@@ -1,7 +1,9 @@
 #!/bin/sh
 
-# Modified by Stan Schwertly to download locally rather than to send to Posterous. Github: http://github.com/Stantheman/Twitpic-Backup
+# Modified by Stan Schwertly to download locally rather than to send to Posterous. 
+# Github: http://github.com/Stantheman/Twitpic-Backup
 
+# Copyright 2010 Tim "burndive" of http://burndive.blogspot.com/
 # This software is licensed under the Creative Commons GNU GPL version 2.0 or later.
 # License informattion: http://creativecommons.org/licenses/GPL/2.0/
 
