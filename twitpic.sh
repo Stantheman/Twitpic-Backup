@@ -54,7 +54,7 @@ while [ $MORE -ne 0 ]; do
   if [ ! -f "$FILENAME" ]; then
 	wget http://twitpic.com/photos/${TP_NAME}?page=$PAGE -O $FILENAME
   fi
-  if [ -z "`grep "More photos &gt;" $FILENAME`" ]; then
+  if [ -z "`grep ">Next<" $FILENAME`" ]; then
 	MORE=0
   else
 	PAGE=`expr $PAGE + 1`
