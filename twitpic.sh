@@ -78,7 +78,7 @@ for ID in $ALL_IDS; do
 	wget http://twitpic.com/$ID/full -O $FULL_HTML
   fi
 
-  FULL_URL=`grep "<img src" $FULL_HTML | grep -Eo "src=\"[^\"]*\"" | grep -Eo "http://[^\"]*"`
+  FULL_URL=`grep "<img src" $FULL_HTML | grep -Eo "src=\"[^\"]*\"" | grep -Eo "https://[^\"]*"`
 
   if [ "$IMG_DOWNLOAD" -eq 1 ]; then
 	EXT=`echo "$FULL_URL" | grep -Eo "[a-zA-Z0-9]+\.[a-zA-Z0-9]+\?" | head -n1 | grep -Eo "\.[a-zA-Z0-9]+"`
