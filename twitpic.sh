@@ -87,6 +87,7 @@ for ID in $ALL_IDS; do
 	fi
 	FULL_FILE=$PREFIX-$ID-full$EXT
 	if [ ! -f "images/$FULL_FILE" ]; then
+	  FULL_URL=`echo $FULL_URL | sed 's/https/http/g'`
 	  wget "$FULL_URL" -O "images/$FULL_FILE"
 	fi
   fi
